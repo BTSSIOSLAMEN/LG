@@ -1,8 +1,10 @@
+package eu.ensitech.projects;
+
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 
-public class loupgarou {
+public class Main {
 
 	private JFrame frame;
 
@@ -13,7 +15,7 @@ public class loupgarou {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					loupgarou window = new loupgarou();
+					Main window = new Main();
 					window.frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -25,7 +27,7 @@ public class loupgarou {
 	/**
 	 * Create the application.
 	 */
-	public loupgarou() {
+	public Main() {
 		initialize();
 	}
 

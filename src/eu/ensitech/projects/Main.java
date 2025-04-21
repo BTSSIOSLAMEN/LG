@@ -21,10 +21,11 @@ public class Main {
 		frame.setBounds(0, 0, screen.width, screen.height);
 		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setLocationRelativeTo(null);
+		frame.getContentPane().setLayout(null);
+		frame.setVisible(true);
 
 		new Home();
-
-		frame.setVisible(true);
 	}
 
 	public static int getMinPlayer() {
@@ -39,5 +40,19 @@ public class Main {
 	}
 	public static Game getGame() {
 		return game;
+	}
+
+	public static void setContentPane(JPanel contentPane) {
+		JLabel title = new JLabel("Loup-Garou");
+		title.setHorizontalAlignment(SwingConstants.CENTER);
+		title.setBounds(0, 0, frame.getWidth(), 30);
+		title.setFont(new Font("Tahoma", Font.PLAIN, 27));
+		contentPane.add(title);
+
+		frame.getContentPane().removeAll();
+		frame.getContentPane().add(contentPane);
+		frame.invalidate();
+		frame.validate();
+		frame.repaint();
 	}
 }

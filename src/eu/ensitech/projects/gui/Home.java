@@ -16,12 +16,6 @@ public class Home {
         contentPane.setLocation(0, 0);
         contentPane.setSize(Main.getFrame().getSize());
 
-        JLabel title = new JLabel("Loup-Garou");
-        title.setHorizontalAlignment(SwingConstants.CENTER);
-        title.setBounds(0, 0, contentPane.getWidth(), 30);
-        title.setFont(new Font("Tahoma", Font.PLAIN, 27));
-        contentPane.add(title);
-
         JLabel welcome = new JLabel("Bienvenue sur le jeu du Loup-Garou");
         welcome.setHorizontalAlignment(SwingConstants.CENTER);
         welcome.setBounds(0, 120, contentPane.getWidth(), 30);
@@ -74,7 +68,6 @@ public class Home {
         });
         contentPane.add(play);
 
-        Main.getFrame().getContentPane().removeAll();
-        Main.getFrame().getContentPane().add(contentPane);
+        Main.setContentPane(contentPane);
     }
 }

@@ -65,6 +65,7 @@ public class Home {
                     maxVoteTimeError.setVisible(true);
                 }
             }
+            new RoleReveal();
         });
         contentPane.add(play);
 

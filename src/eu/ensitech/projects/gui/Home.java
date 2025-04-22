@@ -47,7 +47,7 @@ public class Home {
         maxVoteTime.setFont(new Font("Tahoma", Font.PLAIN, 15));
         contentPane.add(maxVoteTime);
 
-        JLabel maxVoteTimeError = new JLabel("La valeur entrée doit être un nombre entier");
+        JLabel maxVoteTimeError = new JLabel("La valeur entrée doit être un nombre entier supérieur à 0");
         maxVoteTimeError.setBounds(contentPane.getWidth() / 2 - 100, 600, 450, 20);
         maxVoteTimeError.setForeground(Color.RED);
         maxVoteTimeError.setVisible(false);
@@ -60,6 +60,12 @@ public class Home {
             Main.getGame().setPlayerCount((Integer) playerCountChooser.getSelectedItem());
             if (!maxVoteTime.getText().isEmpty()) {
                 try {
+                    int val = Integer.parseInt(maxVoteTime.getText());
+                    if (val <= 0) {
+                        maxVoteTimeError.setVisible(true);
+                        return;
+                    }
+
                     Main.getGame().setVoteAutoTimer(Integer.parseInt(maxVoteTime.getText()));
                 } catch (NumberFormatException exception) {
                     maxVoteTimeError.setVisible(true);

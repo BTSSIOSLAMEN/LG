@@ -3,6 +3,7 @@ package eu.ensitech.projects.gui;
 import eu.ensitech.projects.Main;
 import eu.ensitech.projects.classes.Player;
 import eu.ensitech.projects.utils.AudioUtils;
+import eu.ensitech.projects.utils.Role;
 
 import javax.swing.*;
 import java.awt.*;
@@ -82,6 +83,10 @@ public class Night {
 
             information.setText("Les loup-garoux se réveillent !");
             AudioUtils.playSound("werewolf");
+
+            for (Player player : Main.getGame().getPlayers())
+                if (player.getRole().equals(Role.WEREWOLF))
+                    displayRole(Main.findButtonByPlayer(player, playerList), player);
         } else if (step == Step.WEREWOLF) {
             step = Step.WEREWOLF_END;
 
@@ -100,7 +105,7 @@ public class Night {
 
             timedNextStep();
         } else if (step == Step.END) {
-            // TODO : launch new Day();
+            new Day();
         }
     }
 

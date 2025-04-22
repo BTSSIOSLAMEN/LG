@@ -28,8 +28,8 @@ public class Main {
 		frame.setVisible(true);
 
 		// TODO : Remove debug mode
-		game.setPlayerCount(MAX_PLAYER);
-		for (int i = 0; i < MAX_PLAYER; i++)
+		game.setPlayerCount(MIN_PLAYER);
+		for (int i = 0; i < MIN_PLAYER; i++)
 			game.createPlayer();
 
 		new Night();

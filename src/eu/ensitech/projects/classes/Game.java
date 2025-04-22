@@ -3,7 +3,6 @@ package eu.ensitech.projects.classes;
 import com.sun.xml.internal.fastinfoset.util.ValueArrayResourceException;
 import eu.ensitech.projects.managers.RoleManager;
 import eu.ensitech.projects.utils.Role;
-import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.ArrayList;
 import java.util.List;

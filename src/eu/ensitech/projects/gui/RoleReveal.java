@@ -84,7 +84,7 @@ public class RoleReveal {
 			}
 		} else {
 			// The game start here
-			Main.getFrame().dispose();
+			new Night();
 		}
 	}
 }

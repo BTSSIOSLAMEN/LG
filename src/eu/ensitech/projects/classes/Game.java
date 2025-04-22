@@ -1,7 +1,9 @@
 package eu.ensitech.projects.classes;
 
+import com.sun.xml.internal.fastinfoset.util.ValueArrayResourceException;
 import eu.ensitech.projects.managers.RoleManager;
 import eu.ensitech.projects.utils.Role;
+import jdk.nashorn.internal.runtime.regexp.joni.exception.ValueException;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +15,9 @@ public class Game {
     private final List<Player> players = new ArrayList<>();
     private RoleManager roleManager = new RoleManager(0);
 
+    private int nightCount = 0;
+    private int dayCount = 0;
+
     public int getPlayerCount() {
         return playerCount;
     }
@@ -21,6 +26,29 @@ public class Game {
     }
     public List<Player> getPlayers() {
         return players;
+    }
+
+    public int getNightCount() {
+        return nightCount;
+    }
+    public int getDayCount() {
+        return dayCount;
+    }
+
+    public Player getPlayerById(int id) {
+        for (Player player : players)
+            if (player.getId() == id)
+                return player;
+
+        return null;
+    }
+
+    public Player.Seer getSeer() {
+        for (Player player : players)
+            if (player.getRole().equals(Role.SEER))
+                return (Player.Seer) player;
+
+        throw new ValueArrayResourceException();
     }
 
     public Player createPlayer() {
@@ -35,10 +63,15 @@ public class Game {
         if (roleManager.roleIsEntirelyDispatch(role))
             return createPlayer();
 
-        Player player = new Player(players.size(), role);
+        Player player;
+        if (role.equals(Role.SEER)) {
+            player = new Player.Seer();
+        } else {
+            player = new Player(role);
+        }
         players.add(player);
-        roleManager.getDispatchedRoles().replace(role, roleManager.getDispatchedRoles().get(role) + 1);
 
+        roleManager.getDispatchedRoles().replace(role, roleManager.getDispatchedRoles().get(role) + 1);
         return player;
     }
 
@@ -48,5 +81,12 @@ public class Game {
     }
     public void setVoteAutoTimer(int voteAutoTimer) {
         this.voteAutoTimer = voteAutoTimer;
+    }
+
+    public void addNight() {
+        this.nightCount++;
+    }
+    public void addDay() {
+        this.dayCount++;
     }
 }

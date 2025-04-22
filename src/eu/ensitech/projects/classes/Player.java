@@ -4,14 +4,17 @@ import eu.ensitech.projects.utils.Role;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Player {
+    private static final AtomicInteger idFactory = new AtomicInteger(-1);
+
     private final int id;
     private final Role role;
     private boolean alive = true;
 
-    public Player(int id, Role role) {
-        this.id = id;
+    public Player(Role role) {
+        this.id = idFactory.incrementAndGet();
         this.role = role;
     }
 
@@ -32,8 +35,8 @@ public class Player {
     public static class Seer extends Player {
         private final List<Player> seenPlayers = new ArrayList<>();
 
-        public Seer(int id) {
-            super(id, Role.SEER);
+        public Seer() {
+            super(Role.SEER);
         }
 
         public List<Player> getSeenPlayers() {

@@ -1,10 +1,12 @@
 package eu.ensitech.projects;
 
 import eu.ensitech.projects.classes.Game;
-import eu.ensitech.projects.gui.Home;
+import eu.ensitech.projects.classes.Player;
+import eu.ensitech.projects.gui.Night;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionListener;
 
 public class Main {
 	private static final int MIN_PLAYER = 8;
@@ -25,7 +27,11 @@ public class Main {
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
 
-		new Home();
+		game.setPlayerCount(MAX_PLAYER);
+		for (int i = 0; i < MAX_PLAYER; i++)
+			game.createPlayer();
+
+		new Night();
 	}
 
 	public static int getMinPlayer() {
@@ -54,5 +60,53 @@ public class Main {
 		frame.invalidate();
 		frame.validate();
 		frame.repaint();
+	}
+
+	public static JPanel getPlayerList(ActionListener listener) {
+		JPanel panel = new JPanel();
+		panel.setSize(frame.getWidth() - 70, 200);
+
+		GridLayout layout = new GridLayout();
+		layout.setHgap(70);
+		layout.setRows(3);
+		layout.setVgap(35);
+		panel.setLayout(layout);
+
+		int i = 1;
+		for (Player player : Main.getGame().getPlayers()) {
+			JButton button = new JButton("Joueur " + i + (!player.isAlive() ? " - " + player.getRole().getDisplayName() : ""));
+			button.setForeground(player.isAlive() ? Color.BLACK : Color.RED);
+			button.setBackground(player.isAlive() ? Color.WHITE : Color.GRAY);
+			button.addActionListener(listener);
+			button.setSize(70, 10);
+			button.setActionCommand(String.valueOf(player.getId()));
+			panel.add(button);
+			i++;
+		}
+
+		return panel;
+	}
+
+	public static Player parsePlayer(JButton btn) {
+		String actionCommand = btn.getActionCommand();
+		int id = Integer.parseInt(actionCommand);
+		return Main.getGame().getPlayerById(id);
+	}
+
+	public static JButton findButtonByPlayer(Player player, JPanel panel) {
+		for (Component component : panel.getComponents()) {
+			if (!(component instanceof JButton))
+				continue;
+
+			JButton btn = (JButton) component;
+			Player parsePlayer = Main.parsePlayer(btn);
+			if (player == null)
+				continue;
+
+			if (parsePlayer.getId() == player.getId())
+				return btn;
+		}
+
+		return null;
 	}
 }

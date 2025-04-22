@@ -54,6 +54,12 @@ public class Night {
 
     private void nextStep() {
         if (step == Step.START) {
+            if (!Main.getGame().getSeer().isAlive()) {
+                step = Step.SEER_END;
+                nextStep();
+                return;
+            }
+
             step = Step.SEER;
 
             information.setText("La voyante se réveille !");

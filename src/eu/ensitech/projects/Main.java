@@ -2,7 +2,7 @@ package eu.ensitech.projects;
 
 import eu.ensitech.projects.classes.Game;
 import eu.ensitech.projects.classes.Player;
-import eu.ensitech.projects.gui.Night;
+import eu.ensitech.projects.gui.Home;
 
 import javax.swing.*;
 import java.awt.*;
@@ -16,23 +16,25 @@ public class Main {
 	private static Game game;
 
 	public static void main(String[] args) {
+		start();
+	}
+
+	public static void start() {
 		game = new Game();
 
-		Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
-		frame = new JFrame("Loup-Garou");
-		frame.setBounds(0, 0, screen.width, screen.height);
-		frame.setExtendedState(Frame.MAXIMIZED_BOTH);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLocationRelativeTo(null);
-		frame.getContentPane().setLayout(null);
-		frame.setVisible(true);
+		// Allow Replay
+		if (frame == null) {
+			Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
+			frame = new JFrame("Loup-Garou");
+			frame.setBounds(0, 0, screen.width, screen.height);
+			frame.setExtendedState(Frame.MAXIMIZED_BOTH);
+			frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+			frame.setLocationRelativeTo(null);
+			frame.getContentPane().setLayout(null);
+			frame.setVisible(true);
+		}
 
-		// TODO : Remove debug mode
-		game.setPlayerCount(MIN_PLAYER);
-		for (int i = 0; i < MIN_PLAYER; i++)
-			game.createPlayer();
-
-		new Night();
+		new Home();
 	}
 
 	public static int getMinPlayer() {

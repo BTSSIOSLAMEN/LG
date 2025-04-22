@@ -81,7 +81,7 @@ public class Night {
         } else if (step == Step.SEER_END) {
             step = Step.WEREWOLF;
 
-            information.setText("Les loup-garoux se réveillent !");
+            information.setText("Les loup-garous se réveillent !");
             AudioUtils.playSound("werewolf");
 
             for (Player player : Main.getGame().getPlayers())
@@ -90,7 +90,7 @@ public class Night {
         } else if (step == Step.WEREWOLF) {
             step = Step.WEREWOLF_END;
 
-            information.setText("Les loup-garoux se rendorment !");
+            information.setText("Les loup-garous se rendorment !");
             selectedPlayer.setAlive(false);
             selectedPlayer = null;
             setPlayerList();

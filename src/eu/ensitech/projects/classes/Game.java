@@ -74,6 +74,28 @@ public class Game {
         return player;
     }
 
+    public boolean isFinish() {
+        return getWinner() != null;
+    }
+
+    public Role getWinner() {
+        int aliveWerewolfCount = 0;
+        int aliveOtherCount = 0;
+        for (Player player : players) {
+            if (player.getRole().equals(Role.WEREWOLF))
+                aliveWerewolfCount++;
+            else
+                aliveOtherCount++;
+        }
+
+        if (aliveWerewolfCount == 0)
+            return Role.VILLAGER;
+        else if (aliveWerewolfCount > aliveOtherCount)
+            return Role.WEREWOLF;
+
+        return null;
+    }
+
     public void setPlayerCount(int playerCount) {
         this.playerCount = playerCount;
         this.roleManager = new RoleManager(playerCount);

@@ -27,7 +27,7 @@ public class Day {
     private Player playerInVote;
 
     private Player votedPlayer;
-    private HashMap<Player, Integer> votes = new HashMap<>();
+    private final HashMap<Player, Integer> votes = new HashMap<>();
 
     public Day() {
         Main.getGame().addDay();
@@ -35,6 +35,11 @@ public class Day {
     }
 
     public void initialize() {
+        if (Main.getGame().isFinish()) {
+            new End();
+            return;
+        }
+
         contentPane = new JPanel();
         contentPane.setLayout(null);
         contentPane.setLocation(0, 0);
@@ -137,7 +142,17 @@ public class Day {
                 information.setText("Le joueur " + (votedPlayer.getId() + 1) + " a été tué");
             }
 
-            Timer t = new Timer(4000, (e) -> new Night());
+            if (Main.getGame().isFinish()) {
+                new End();
+                return;
+            }
+
+            Timer t = new Timer(4000, e -> {
+                if (Main.getGame().isFinish())
+                    new Night();
+                else
+                    new End();
+            });
             t.setRepeats(false);
             t.start();
         }

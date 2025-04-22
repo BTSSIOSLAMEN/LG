@@ -27,6 +27,7 @@ public class Main {
 		frame.getContentPane().setLayout(null);
 		frame.setVisible(true);
 
+		// TODO : Remove debug mode
 		game.setPlayerCount(MAX_PLAYER);
 		for (int i = 0; i < MAX_PLAYER; i++)
 			game.createPlayer();
@@ -54,6 +55,12 @@ public class Main {
 		title.setBounds(0, 0, frame.getWidth(), 30);
 		title.setFont(new Font("Tahoma", Font.PLAIN, 27));
 		contentPane.add(title);
+
+		JLabel gameInfo = new JLabel("Jour : " + game.getDayCount() + " | Nuit : " + game.getNightCount());
+		gameInfo.setBounds(0, 0, frame.getWidth() - 35, 30);
+		gameInfo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		gameInfo.setHorizontalAlignment(SwingConstants.RIGHT);
+		contentPane.add(gameInfo);
 
 		frame.getContentPane().removeAll();
 		frame.getContentPane().add(contentPane);

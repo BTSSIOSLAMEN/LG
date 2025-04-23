@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class Main {
-	private static final int MIN_PLAYER = 8;
+	private static final int MIN_PLAYER = 2;
 	private static final int MAX_PLAYER = 18;
 
 	private static JFrame frame;
@@ -54,13 +54,13 @@ public class Main {
 	public static void setContentPane(JPanel contentPane) {
 		JLabel title = new JLabel("Loup-Garou");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
-		title.setBounds(0, 0, frame.getWidth(), 30);
-		title.setFont(new Font("Tahoma", Font.PLAIN, 27));
+		title.setBounds(0, 15, frame.getWidth(), 30);
+		title.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		contentPane.add(title);
 
 		JLabel gameInfo = new JLabel("Jour : " + game.getDayCount() + " | Nuit : " + game.getNightCount());
-		gameInfo.setBounds(0, 0, frame.getWidth() - 35, 30);
-		gameInfo.setFont(new Font("Tahoma", Font.PLAIN, 18));
+		gameInfo.setBounds(0, 15, frame.getWidth() - 35, 30);
+		gameInfo.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		gameInfo.setHorizontalAlignment(SwingConstants.RIGHT);
 		contentPane.add(gameInfo);
 

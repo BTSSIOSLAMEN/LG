@@ -31,18 +31,28 @@ public class Night {
     private void initialize() {
         contentPane = new JPanel();
         contentPane.setLayout(null);
-        contentPane.setLocation(0, 0);
         contentPane.setSize(Main.getFrame().getSize());
+        Dimension size = Main.getFrame().getSize();
+        contentPane.setSize(size);
+        
+        JLabel titleFrame = new JLabel("NUIT");
+		titleFrame.setHorizontalAlignment(SwingConstants.CENTER);
+		titleFrame.setFont(new Font("Tahoma", Font.BOLD, 28));
+		titleFrame.setBounds(0, 60, size.width, 40);
+		titleFrame.setBackground(Color.DARK_GRAY);
+        titleFrame.setOpaque(true);
+        titleFrame.setForeground(Color.WHITE);
+        contentPane.add(titleFrame, BorderLayout.NORTH);
 
         information = new JLabel("Le village s'endort !");
         information.setHorizontalAlignment(SwingConstants.CENTER);
-        information.setBounds(0, 120, contentPane.getWidth(), 30);
+        information.setBounds(0, 150, contentPane.getWidth(), 30);
         information.setFont(new Font("Tahoma", Font.PLAIN, 22));
         contentPane.add(information);
 
         next = new JButton("Suivant");
-        next.setFont(new Font("Tahoma", Font.PLAIN, 27));
-        next.setBounds(contentPane.getWidth() / 2 - 100, 800, 175, 100);
+        next.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        next.setBounds(size.width / 2 - 150, size.height - 200, 300, 80);
         next.setEnabled(false);
         next.addActionListener(e -> nextStep());
         contentPane.add(next);
@@ -66,18 +76,28 @@ public class Night {
 
             information.setText("La voyante se réveille !");
             AudioUtils.playSound("seer");
+            
+            for (Player player : Main.getGame().getPlayers())
+                if (player.getRole().equals(Role.SEER)) {
+                    JButton button = Main.findButtonByPlayer(player, playerList);
+                    displayRole(button, player);
+                    button.setEnabled(false);
+                }
+            
             next.setText("Valider");
 
             for (Player seenPlayer : Main.getGame().getSeer().getSeenPlayers()) {
                 if (seenPlayer.isAlive()) {
+                	JButton button = Main.findButtonByPlayer(seenPlayer, playerList);
                     displayRole(Main.findButtonByPlayer(seenPlayer, playerList), seenPlayer);
+                    button.setEnabled(false);
                 }
             }
             
         } else if (step == Step.SEER) {
             step = Step.SEER_END;
 
-            information.setText("La voyante s'endort !");
+            information.setText("La voyante se rendort !");
             selectedPlayer = null;
             setPlayerList();
             next.setEnabled(false);

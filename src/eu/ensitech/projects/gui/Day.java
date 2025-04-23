@@ -42,39 +42,50 @@ public class Day {
 
         contentPane = new JPanel();
         contentPane.setLayout(null);
-        contentPane.setLocation(0, 0);
         contentPane.setSize(Main.getFrame().getSize());
+        Dimension size = Main.getFrame().getSize();
+        contentPane.setSize(size);
+        
+        JLabel titleFrame = new JLabel("JOUR");
+		titleFrame.setHorizontalAlignment(SwingConstants.CENTER);
+		titleFrame.setFont(new Font("Tahoma", Font.BOLD, 28));
+		titleFrame.setBounds(0, 60, size.width, 40);
+		titleFrame.setBackground(Color.DARK_GRAY);
+        titleFrame.setOpaque(true);
+        titleFrame.setForeground(Color.WHITE);
+        contentPane.add(titleFrame, BorderLayout.NORTH);
 
         information = new JLabel("Le village débat pour éliminer une personne !");
         information.setHorizontalAlignment(SwingConstants.CENTER);
-        information.setBounds(0, 120, contentPane.getWidth(), 30);
+        information.setBounds(0, 150, contentPane.getWidth(), 30);
         information.setFont(new Font("Tahoma", Font.PLAIN, 22));
         contentPane.add(information);
-
+        
+        next = new JButton("Finir le débat");
+        next.setFont(new Font("Tahoma", Font.PLAIN, 24));
+        next.setBounds(size.width / 2 - 150, size.height - 200, 300, 80);
+        next.setEnabled(true);
+        next.addActionListener(e -> nextStep());
+        contentPane.add(next);
+        
         if (Main.getGame().getVoteAutoTimer() != 0) {
+        	next.setEnabled(false);
             autoVoteTimer = new Timer(1000, new ActionListener() {
                 int i = 0;
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    information.setText("Le village débat pour éliminer une personne ! Temps restant de débat : " + (Main.getGame().getVoteAutoTimer() - i) + "s");
+                    information.setText("Le village débat pour éliminer une personne ! Temps restant : " + (Main.getGame().getVoteAutoTimer() - i) + "s");
 
                     if (++i > Main.getGame().getVoteAutoTimer()) {
                         autoVoteTimer.stop();
-
+                        next.setEnabled(true);
                         nextStep();
                     }
                 }
             });
             autoVoteTimer.start();
         }
-
-        next = new JButton("Finir le débat");
-        next.setFont(new Font("Tahoma", Font.PLAIN, 27));
-        next.setBounds(contentPane.getWidth() / 2 - 100, 800, 175, 100);
-        next.setEnabled(true);
-        next.addActionListener(e -> nextStep());
-        contentPane.add(next);
 
         setPlayerList();
         Main.setContentPane(contentPane);

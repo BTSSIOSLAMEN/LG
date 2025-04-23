@@ -11,51 +11,59 @@ public class Home {
     }
 
     private void initialize() {
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(null);
-        contentPane.setLocation(0, 0);
-        contentPane.setSize(Main.getFrame().getSize());
+    	JPanel contentPane = new JPanel();
+    	contentPane.setLayout(null);
+    	Dimension size = Main.getFrame().getSize();
+    	contentPane.setSize(size);
 
-        JLabel welcome = new JLabel("Bienvenue sur le jeu du Loup-Garou");
+    	JLabel welcome = new JLabel("Bienvenue sur le jeu du Loup-Garou ");
         welcome.setHorizontalAlignment(SwingConstants.CENTER);
-        welcome.setBounds(0, 120, contentPane.getWidth(), 30);
-        welcome.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        welcome.setFont(new Font("Tahoma", Font.BOLD, 28));
+        welcome.setBounds(0, 60, size.width, 40);
         contentPane.add(welcome);
+        
+        ImageIcon originalIcon = new ImageIcon(getClass().getResource("/eu/ensitech/projects/assets/img/werewolf.png"));
+        Image scaledImage = originalIcon.getImage().getScaledInstance(150, 150, Image.SCALE_SMOOTH);
+        ImageIcon resizedIcon = new ImageIcon(scaledImage);
+        JLabel werewolfImg = new JLabel(resizedIcon);
+        werewolfImg.setBounds(size.width / 2 - 125, 90, 250, 250);
+        contentPane.add(werewolfImg);
 
         JLabel playerCountChooserLabel = new JLabel("Nombre de joueurs :");
-        playerCountChooserLabel.setBounds(contentPane.getWidth() / 2 - 70, 450, 250, 20);
-        playerCountChooserLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        playerCountChooserLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
+        playerCountChooserLabel.setBounds(size.width / 2 - 100, 360, 200, 30);
         contentPane.add(playerCountChooserLabel);
 
         JComboBox<Integer> playerCountChooser = new JComboBox<>();
-        DefaultComboBoxModel<Integer> playerCountChoices = new DefaultComboBoxModel<>();
         for (int i = Main.getMinPlayer(); i <= Main.getMaxPlayer(); i++) {
-            playerCountChoices.addElement(i);
+            playerCountChooser.addItem(i);
         }
-        playerCountChooser.setModel(playerCountChoices);
-        playerCountChooser.setBounds(contentPane.getWidth() / 2 - 40, 480, 100, 20);
-        playerCountChooser.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        playerCountChooser.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        playerCountChooser.setBounds(size.width / 2 - 50, 400, 100, 30);
         contentPane.add(playerCountChooser);
 
-        JLabel maxVoteTimeLabel = new JLabel("Temps maximum de vote en secondes (optionnel) :");
-        maxVoteTimeLabel.setBounds(contentPane.getWidth() / 2 - 180, 550, 450, 20);
+        JLabel maxVoteTimeLabel = new JLabel("Temps maximum de vote (secondes, optionnel) :");
         maxVoteTimeLabel.setFont(new Font("Tahoma", Font.PLAIN, 18));
+        maxVoteTimeLabel.setBounds(size.width / 2 - 200, 460, 400, 30);
         contentPane.add(maxVoteTimeLabel);
 
         JTextField maxVoteTime = new JTextField();
-        maxVoteTime.setBounds(contentPane.getWidth() / 2 - 40, 580, 100, 20);
-        maxVoteTime.setFont(new Font("Tahoma", Font.PLAIN, 15));
+        maxVoteTime.setFont(new Font("Tahoma", Font.PLAIN, 16));
+        maxVoteTime.setBounds(size.width / 2 - 50, 500, 100, 30);
         contentPane.add(maxVoteTime);
 
-        JLabel maxVoteTimeError = new JLabel("La valeur entrée doit être un nombre entier supérieur à 0");
-        maxVoteTimeError.setBounds(contentPane.getWidth() / 2 - 100, 600, 450, 20);
+        JLabel maxVoteTimeError = new JLabel("⚠ La valeur doit être un entier supérieur à 0 ⚠");
+        maxVoteTimeError.setFont(new Font("Tahoma", Font.PLAIN, 14));
         maxVoteTimeError.setForeground(Color.RED);
+        maxVoteTimeError.setBounds(size.width / 2 - 150, 540, 300, 20);
         maxVoteTimeError.setVisible(false);
         contentPane.add(maxVoteTimeError);
 
         JButton play = new JButton("JOUER");
-        play.setFont(new Font("Tahoma", Font.PLAIN, 27));
-        play.setBounds(contentPane.getWidth() / 2 - 150, 800, 300, 150);
+        play.setFont(new Font("Tahoma", Font.BOLD, 28));
+        play.setBounds(size.width / 2 - 150, size.height - 200, 300, 80);
+        contentPane.add(play);
+        
         play.addActionListener(event -> {
             Main.getGame().setPlayerCount((Integer) playerCountChooser.getSelectedItem());
             if (!maxVoteTime.getText().isEmpty()) {
@@ -73,7 +81,6 @@ public class Home {
             }
             new RoleReveal();
         });
-        contentPane.add(play);
 
         Main.setContentPane(contentPane);
     }

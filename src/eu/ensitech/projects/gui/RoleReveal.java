@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.Font;
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 
 public class RoleReveal {
 	private JButton nextBtn;
@@ -17,19 +18,26 @@ public class RoleReveal {
 
 	private void initialize() {
 		JPanel contentPane = new JPanel();
-		contentPane.setLayout(null);
-		contentPane.setLocation(0, 0);
-		contentPane.setSize(Main.getFrame().getSize());
+    	contentPane.setLayout(null);
+    	Dimension size = Main.getFrame().getSize();
+    	contentPane.setSize(size);
 		
 		JLabel titleFrame = new JLabel("Attribution des rôles");
-		titleFrame.setForeground(new Color(0, 0, 0));
-		titleFrame.setFont(new Font("Lucida Grande", Font.BOLD, 25));
 		titleFrame.setHorizontalAlignment(SwingConstants.CENTER);
-		titleFrame.setBounds(6, 0, 988, 80);
-		contentPane.add(titleFrame);
+		titleFrame.setFont(new Font("Tahoma", Font.BOLD, 28));
+		titleFrame.setBounds(0, 60, size.width, 40);
+		titleFrame.setBackground(Color.DARK_GRAY);
+        titleFrame.setOpaque(true);
+        titleFrame.setForeground(Color.WHITE);
+        contentPane.add(titleFrame, BorderLayout.NORTH);
 		
 		JButton roleRevealBtn = new JButton("Cliquez ici pour découvrir votre rôle");
-		roleRevealBtn.setBounds(300, 300, 400, 100);
+		roleRevealBtn.setBounds(size.width / 2 - 250, 280, 500, 100);
+		roleRevealBtn.setFont(new Font("Tahoma", Font.BOLD, 18));
+		roleRevealBtn.setForeground(Color.DARK_GRAY);
+		roleRevealBtn.setBackground(Color.WHITE);
+		roleRevealBtn.setOpaque(true);
+		roleRevealBtn.setBorder(BorderFactory.createLineBorder(Color.DARK_GRAY, 3, true));
 		contentPane.add(roleRevealBtn);
 		roleRevealBtn.addActionListener(e -> {
             JFrame roleFrame = new JFrame("Votre rôle");
@@ -52,12 +60,13 @@ public class RoleReveal {
         });
 
 		player = new JLabel();
-		player.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		player.setFont(new Font("Tahoma", Font.BOLD, 20));
 		player.setHorizontalAlignment(SwingConstants.CENTER);
-		player.setBounds(6, 200, 988, 60);
+		player.setBounds(0, 200, size.width, 40);
 		
 		nextBtn = new JButton("Suivant");
-		nextBtn.setBounds(300, 420, 400, 50);
+		nextBtn.setBounds(size.width / 2 - 150, size.height - 200, 300, 80);
+		nextBtn.setFont(new Font("Tahoma", Font.BOLD, 20));
 		nextBtn.addActionListener(e -> reloadVisual());
 
 		reloadVisual();
@@ -65,9 +74,9 @@ public class RoleReveal {
 		contentPane.add(player);
 		
 		JLabel msgLbl = new JLabel("Les autres joueurs : fermez les yeux !");
-		msgLbl.setFont(new Font("Lucida Grande", Font.BOLD, 20));
+		msgLbl.setFont(new Font("Tahoma", Font.ITALIC, 20));
 		msgLbl.setHorizontalAlignment(SwingConstants.CENTER);
-		msgLbl.setBounds(6, 500, 988, 80);
+		msgLbl.setBounds(0, 400, size.width, 40);
 		contentPane.add(msgLbl);
 
 		Main.setContentPane(contentPane);

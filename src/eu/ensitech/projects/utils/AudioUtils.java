@@ -3,27 +3,27 @@ package eu.ensitech.projects.utils;
 import javax.sound.sampled.*;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.InvalidPathException;
 
 public class AudioUtils {
-    private static AudioInputStream getAudioStream(String path) {
+    private static AudioInputStream getAudioStream(String name) {
+    	String path = "/eu/ensitech/projects/assets/song/" + name + ".wav";
+    	InputStream inputStream = AudioUtils.class.getResourceAsStream(path);
         File file = new File(path);
-        if (!file.exists())
-            throw new InvalidPathException(path, "File not found");
+        if (inputStream == null)
+            throw new IllegalArgumentException("File not found: " + path);
 
         try {
-            return AudioSystem.getAudioInputStream(file);
+            return AudioSystem.getAudioInputStream(inputStream);
         } catch (UnsupportedAudioFileException | IOException exception) {
             throw new RuntimeException(exception);
         }
     }
 
     public static void playSound(String name) {
-        AudioInputStream audioInputStream = getAudioStream("assets/" + name + ".wav");
-        if (audioInputStream == null)
-            return;
-
-        try {
+    	try {
+            AudioInputStream audioInputStream = getAudioStream(name);
             Clip clip = AudioSystem.getClip();
             clip.open(audioInputStream);
             clip.start();

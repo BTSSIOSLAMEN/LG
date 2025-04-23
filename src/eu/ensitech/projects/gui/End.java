@@ -13,19 +13,29 @@ public class End {
     }
 
     public void initialize() {
-        JPanel contentPane = new JPanel();
-        contentPane.setLayout(null);
-        contentPane.setLocation(0, 0);
-        contentPane.setSize(Main.getFrame().getSize());
+    	JPanel contentPane = new JPanel();
+    	contentPane.setLayout(null);
+    	Dimension size = Main.getFrame().getSize();
+    	contentPane.setSize(size);
+		
+		JLabel titleFrame = new JLabel("Fin de la partie");
+		titleFrame.setHorizontalAlignment(SwingConstants.CENTER);
+		titleFrame.setFont(new Font("Tahoma", Font.BOLD, 28));
+		titleFrame.setBounds(0, 60, size.width, 40);
+		titleFrame.setBackground(Color.DARK_GRAY);
+        titleFrame.setOpaque(true);
+        titleFrame.setForeground(Color.WHITE);
+        contentPane.add(titleFrame, BorderLayout.NORTH);
 
         JLabel information = new JLabel(Main.getGame().getWinner().equals(Role.WEREWOLF) ? "Les loup-garous ont gagné !" : "Le village a gagné !");
         information.setHorizontalAlignment(SwingConstants.CENTER);
-        information.setBounds(0, 120, contentPane.getWidth(), 30);
-        information.setFont(new Font("Tahoma", Font.PLAIN, 22));
+        information.setBounds(0, 150, contentPane.getWidth(), 30);
+        information.setFont(new Font("Tahoma", Font.BOLD, 24));
         contentPane.add(information);
 
         JButton replay = new JButton("Rejouer");
-        replay.setBounds(contentPane.getWidth() / 2 - 100, 800, 175, 100);
+        replay.setBounds(size.width / 2 - 150, size.height - 200, 300, 80);
+        replay.setFont(new Font("Tahoma", Font.PLAIN, 24));
         replay.addActionListener((e) -> {
             Player.resetIdFactory();
             Main.start();

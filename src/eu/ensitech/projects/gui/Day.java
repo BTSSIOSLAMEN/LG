@@ -148,7 +148,7 @@ public class Day {
             }
 
             Timer t = new Timer(4000, e -> {
-                if (Main.getGame().isFinish())
+                if (!Main.getGame().isFinish())
                     new Night();
                 else
                     new End();

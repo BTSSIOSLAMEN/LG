@@ -1,6 +1,7 @@
 package eu.ensitech.projects.gui;
 
 import eu.ensitech.projects.Main;
+import eu.ensitech.projects.classes.Player;
 import eu.ensitech.projects.utils.Role;
 
 import javax.swing.*;
@@ -25,7 +26,10 @@ public class End {
 
         JButton replay = new JButton("Rejouer");
         replay.setBounds(contentPane.getWidth() / 2 - 100, 800, 175, 100);
-        replay.addActionListener((e) -> Main.start());
+        replay.addActionListener((e) -> {
+            Player.resetIdFactory();
+            Main.start();
+        });
         contentPane.add(replay);
 
         setPlayerList(contentPane);

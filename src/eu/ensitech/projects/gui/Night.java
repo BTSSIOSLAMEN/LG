@@ -55,20 +55,25 @@ public class Night {
 
     private void nextStep() {
         if (step == Step.START) {
-            if (!Main.getGame().getSeer().isAlive()) {
-                step = Step.SEER_END;
-                nextStep();
-                return;
-            }
-
+        	Player.Seer seer = Main.getGame().getSeer();
+        	if (!seer.isAlive() || seer.hasSeenAllAlive(Main.getGame().getPlayers())) {
+        	    step = Step.SEER_END;
+        	    nextStep();
+        	    return;
+        	}
+            
             step = Step.SEER;
 
             information.setText("La voyante se réveille !");
             AudioUtils.playSound("seer");
             next.setText("Valider");
 
-            for (Player seenPlayer : Main.getGame().getSeer().getSeenPlayers())
-                displayRole(Main.findButtonByPlayer(seenPlayer, playerList), seenPlayer);
+            for (Player seenPlayer : Main.getGame().getSeer().getSeenPlayers()) {
+                if (seenPlayer.isAlive()) {
+                    displayRole(Main.findButtonByPlayer(seenPlayer, playerList), seenPlayer);
+                }
+            }
+            
         } else if (step == Step.SEER) {
             step = Step.SEER_END;
 

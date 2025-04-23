@@ -31,6 +31,10 @@ public class Player {
     public void setAlive(boolean alive) {
         this.alive = alive;
     }
+    
+    public static void resetIdFactory() {
+        idFactory.set(-1);
+    }
 
     public static class Seer extends Player {
         private final List<Player> seenPlayers = new ArrayList<>();
@@ -41,6 +45,12 @@ public class Player {
 
         public List<Player> getSeenPlayers() {
             return seenPlayers;
+        }
+        
+        public boolean hasSeenAllAlive(List<Player> players) {
+            return players.stream()
+                          .filter(Player::isAlive)
+                          .allMatch(seenPlayers::contains);
         }
     }
 }

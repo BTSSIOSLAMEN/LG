@@ -1,6 +1,5 @@
 package eu.ensitech.projects.classes;
 
-import com.sun.xml.internal.fastinfoset.util.ValueArrayResourceException;
 import eu.ensitech.projects.managers.RoleManager;
 import eu.ensitech.projects.utils.Role;
 
@@ -47,7 +46,7 @@ public class Game {
             if (player.getRole().equals(Role.SEER))
                 return (Player.Seer) player;
 
-        throw new ValueArrayResourceException();
+        throw new IllegalStateException();
     }
 
     public Player createPlayer() {
@@ -81,7 +80,10 @@ public class Game {
     public Role getWinner() {
         int aliveWerewolfCount = 0;
         int aliveOtherCount = 0;
+
         for (Player player : players) {
+            if (!player.isAlive()) continue;
+
             if (player.getRole().equals(Role.WEREWOLF))
                 aliveWerewolfCount++;
             else
@@ -90,7 +92,7 @@ public class Game {
 
         if (aliveWerewolfCount == 0)
             return Role.VILLAGER;
-        else if (aliveWerewolfCount > aliveOtherCount)
+        else if (aliveWerewolfCount >= aliveOtherCount)
             return Role.WEREWOLF;
 
         return null;

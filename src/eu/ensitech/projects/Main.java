@@ -9,7 +9,7 @@ import java.awt.*;
 import java.awt.event.ActionListener;
 
 public class Main {
-	private static final int MIN_PLAYER = 2;
+	private static final int MIN_PLAYER = 8;
 	private static final int MAX_PLAYER = 18;
 
 	private static JFrame frame;

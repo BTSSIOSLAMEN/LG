@@ -65,7 +65,10 @@ public class Home {
         contentPane.add(play);
         
         play.addActionListener(event -> {
+            // Récupération du nombre de joueurs
             Main.getGame().setPlayerCount((Integer) playerCountChooser.getSelectedItem());
+
+            // Vérification du temps de vote
             if (!maxVoteTime.getText().isEmpty()) {
                 try {
                     int val = Integer.parseInt(maxVoteTime.getText());
@@ -79,6 +82,8 @@ public class Home {
                     maxVoteTimeError.setVisible(true);
                 }
             }
+
+            // Lancement de l'attribution des rôles
             new RoleReveal();
         });
 

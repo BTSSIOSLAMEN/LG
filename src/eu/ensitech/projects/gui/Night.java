@@ -11,6 +11,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class Night {
+
+    // Étapes de la nuit
     private enum Step {
         START, SEER, SEER_END, WEREWOLF, WEREWOLF_END, END
     }
@@ -64,8 +66,12 @@ public class Night {
     }
 
     private void nextStep() {
+
+        // Étape de la voyante
         if (step == Step.START) {
         	Player.Seer seer = Main.getGame().getSeer();
+
+            // Si la voyante est morte ou a déjà vu tous les joueurs vivants, on passe à l'étape suivante
         	if (!seer.isAlive() || seer.hasSeenAllAlive(Main.getGame().getPlayers())) {
         	    step = Step.SEER_END;
         	    nextStep();
@@ -76,7 +82,8 @@ public class Night {
 
             information.setText("La voyante se réveille !");
             AudioUtils.playSound("seer");
-            
+
+            // On affiche le rôle de la voyante sur le bouton
             for (Player player : Main.getGame().getPlayers())
                 if (player.getRole().equals(Role.SEER)) {
                     JButton button = Main.findButtonByPlayer(player, playerList);
@@ -86,6 +93,7 @@ public class Night {
             
             next.setText("Valider");
 
+            // On affiche le rôle des joueurs déjà vus par la voyante
             for (Player seenPlayer : Main.getGame().getSeer().getSeenPlayers()) {
                 if (seenPlayer.isAlive()) {
                 	JButton button = Main.findButtonByPlayer(seenPlayer, playerList);
@@ -93,7 +101,7 @@ public class Night {
                     button.setEnabled(false);
                 }
             }
-            
+
         } else if (step == Step.SEER) {
             step = Step.SEER_END;
 
@@ -103,15 +111,19 @@ public class Night {
             next.setEnabled(false);
 
             timedNextStep();
+
+        // Étape des loups-garous
         } else if (step == Step.SEER_END) {
             step = Step.WEREWOLF;
 
             information.setText("Les loup-garous se réveillent !");
             AudioUtils.playSound("werewolf");
 
+            // On affiche le rôle des loups-garous sur le bouton
             for (Player player : Main.getGame().getPlayers())
                 if (player.getRole().equals(Role.WEREWOLF))
                     displayRole(Main.findButtonByPlayer(player, playerList), player);
+
         } else if (step == Step.WEREWOLF) {
             step = Step.WEREWOLF_END;
 
@@ -122,6 +134,8 @@ public class Night {
             next.setEnabled(false);
 
             timedNextStep();
+
+        // Fin de la nuit
         } else if (step == Step.WEREWOLF_END) {
             step = Step.END;
 
@@ -130,10 +144,12 @@ public class Night {
 
             timedNextStep();
         } else if (step == Step.END) {
+            // Passer au jour
             new Day();
         }
     }
 
+    // Afficher la liste des joueurs
     private void setPlayerList() {
         if (playerList != null)
             contentPane.remove(playerList);
@@ -143,19 +159,23 @@ public class Night {
         contentPane.add(playerList);
     }
 
+    // Afficher le rôle du joueur sur le bouton
     private void displayRole(JButton btn, Player player) {
         btn.setText(btn.getText() + " - " + player.getRole().getDisplayName());
     }
 
+    // Timer de 5 secondes
     private void timedNextStep() {
         Timer t = new Timer(5000, e -> nextStep());
         t.setRepeats(false);
         t.start();
     }
 
+    // Événement pour les clicks sur les boutons des joueurs
     static class PlayerButtonEvent implements ActionListener {
         private final Night night;
 
+        // Constructeur
         public PlayerButtonEvent(Night night) {
             this.night = night;
         }
@@ -164,11 +184,15 @@ public class Night {
         public void actionPerformed(ActionEvent e) {
             JButton button = (JButton) e.getSource();
             Player player = Main.parsePlayer(button);
+
+            // On ne fait rien si le joueur est mort
             if (!player.isAlive())
                 return;
 
             if (night.step == Step.SEER) {
                 Player.Seer seer = Main.getGame().getSeer();
+
+                // Empêcher la voyante de voir les joueurs déjà vus ou elle-même
                 if (night.selectedPlayer != null || seer.getSeenPlayers().contains(player) || player == Main.getGame().getSeer())
                     return;
 
@@ -176,7 +200,9 @@ public class Night {
                 night.displayRole(button, player);
                 seer.getSeenPlayers().add(player);
                 night.next.setEnabled(true);
+
             } else if (night.step == Step.WEREWOLF) {
+
                 if (night.selectedPlayer != null)
                     Main.findButtonByPlayer(night.selectedPlayer, night.playerList).setBackground(Color.WHITE);
 

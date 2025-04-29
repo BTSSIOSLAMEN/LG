@@ -15,14 +15,16 @@ public class Main {
 	private static JFrame frame;
 	private static Game game;
 
+	// Lancement de l'application
 	public static void main(String[] args) {
 		start();
 	}
 
+	// Démarrage du jeu
 	public static void start() {
 		game = new Game();
 
-		// Allow Replay
+		// Création de la fenêtre
 		if (frame == null) {
 			Dimension screen = Toolkit.getDefaultToolkit().getScreenSize();
 			frame = new JFrame("Loup-Garou");
@@ -37,6 +39,7 @@ public class Main {
 		new Home();
 	}
 
+	// Getters
 	public static int getMinPlayer() {
 		return MIN_PLAYER;
 	}
@@ -51,6 +54,7 @@ public class Main {
 		return game;
 	}
 
+	// Header de la fenêtre
 	public static void setContentPane(JPanel contentPane) {
 		JLabel title = new JLabel("Loup-Garou");
 		title.setHorizontalAlignment(SwingConstants.CENTER);
@@ -71,6 +75,7 @@ public class Main {
 		frame.repaint();
 	}
 
+	// Grille des boutons des joueurs
 	public static JPanel getPlayerList(ActionListener listener) {
 		JPanel panel = new JPanel();
 		panel.setSize(frame.getWidth() - 70, 200);
@@ -96,12 +101,14 @@ public class Main {
 		return panel;
 	}
 
+	// Identification du joueur à partir du bouton
 	public static Player parsePlayer(JButton btn) {
 		String actionCommand = btn.getActionCommand();
 		int id = Integer.parseInt(actionCommand);
 		return Main.getGame().getPlayerById(id);
 	}
 
+	// Identification du bouton à partir du joueur
 	public static JButton findButtonByPlayer(Player player, JPanel panel) {
 		for (Component component : panel.getComponents()) {
 			if (!(component instanceof JButton))

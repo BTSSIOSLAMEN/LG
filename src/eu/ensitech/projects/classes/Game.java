@@ -16,6 +16,7 @@ public class Game {
     private int nightCount = 0;
     private int dayCount = 0;
 
+    // Getters
     public int getPlayerCount() {
         return playerCount;
     }
@@ -33,6 +34,7 @@ public class Game {
         return dayCount;
     }
 
+    // Retourne le joueur correspondant à l'id
     public Player getPlayerById(int id) {
         for (Player player : players)
             if (player.getId() == id)
@@ -41,6 +43,7 @@ public class Game {
         return null;
     }
 
+    // Retourne le joueur étant la voyante
     public Player.Seer getSeer() {
         for (Player player : players)
             if (player.getRole().equals(Role.SEER))
@@ -49,6 +52,7 @@ public class Game {
         throw new IllegalStateException();
     }
 
+    // Création d'un joueur et attribution d'un rôle aléatoire
     public Player createPlayer() {
         //        We generate an int to get a role for the new player
         //        0 -> VILLAGER
@@ -58,25 +62,32 @@ public class Game {
         int randomRole = r.nextInt(3);
         Role role = Role.values()[randomRole];
 
+        // Si le rôle est déjà dispatché, on en tire un autre
         if (roleManager.roleIsEntirelyDispatch(role))
             return createPlayer();
 
+        // Création du joueur avec le rôle
         Player player;
         if (role.equals(Role.SEER)) {
             player = new Player.Seer();
         } else {
             player = new Player(role);
         }
+
+        // On l'ajoute à la liste des joueurs
         players.add(player);
 
+        // Mise à jour de la carte des rôles dispatchés
         roleManager.getDispatchedRoles().replace(role, roleManager.getDispatchedRoles().get(role) + 1);
         return player;
     }
 
+    // Fin de la partie si un joueur a gagné
     public boolean isFinish() {
         return getWinner() != null;
     }
 
+    // Vérifie si l'on a un gagnant
     public Role getWinner() {
         int aliveWerewolfCount = 0;
         int aliveOtherCount = 0;

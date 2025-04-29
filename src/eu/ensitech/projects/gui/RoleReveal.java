@@ -82,6 +82,7 @@ public class RoleReveal {
 		Main.setContentPane(contentPane);
 	}
 
+	// Méthode pour passer au joueur suivant en rechargeant la vue
 	private void reloadVisual() {
 		if (Main.getGame().getPlayers().size() < Main.getGame().getPlayerCount()) {
 			Main.getGame().createPlayer();
@@ -92,7 +93,7 @@ public class RoleReveal {
 				nextBtn.setText("Commencer le jeu");
 			}
 		} else {
-			// The game start here
+			// Début de la partie
 			new Night();
 		}
 	}
